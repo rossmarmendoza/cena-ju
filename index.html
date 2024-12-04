@@ -70,53 +70,48 @@
     </div>
 
     <script type="module">
-        // Import the Firebase SDKs
+        // Importar Firebase
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
         import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
 
-        // Your Firebase configuration
+        // Configuración de Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyCmhocr1lnQs1jK0q4oXZ651i8JAkCzUFY",
             authDomain: "confirmacion-cena-julio.firebaseapp.com",
             databaseURL: "https://confirmacion-cena-julio-default-rtdb.firebaseio.com",
             projectId: "confirmacion-cena-julio",
-            storageBucket: "confirmacion-cena-julio.firebasestorage.app",
+            storageBucket: "confirmacion-cena-julio.appspot.com",
             messagingSenderId: "1028828321508",
             appId: "1:1028828321508:web:6b1f2c4677126aba513ef1",
             measurementId: "G-3SZZ07E5F1"
         };
 
-        // Initialize Firebase
+        // Inicializar Firebase
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
 
-        // Add a new name to the database
+        // Función para agregar un nombre
         function addName() {
             const nameInput = document.getElementById('nameInput');
             const name = nameInput.value.trim();
 
             if (name) {
-                // Push the new name to the database
                 const namesRef = ref(database, 'names');
                 push(namesRef, name);
 
-                // Clear the input field
                 nameInput.value = '';
             } else {
                 alert('Por favor, ingresa un nombre.');
             }
         }
 
-        // Listen for updates to the names list
+        // Función para cargar los nombres
         function loadNames() {
             const nameList = document.getElementById('nameList');
             const namesRef = ref(database, 'names');
 
             onValue(namesRef, (snapshot) => {
-                // Clear the list
                 nameList.innerHTML = '';
-
-                // Populate the list with data from the database
                 const data = snapshot.val();
                 for (const key in data) {
                     const listItem = document.createElement('li');
@@ -126,7 +121,6 @@
             });
         }
 
-        // Load names on page load
         document.addEventListener('DOMContentLoaded', loadNames);
     </script>
 </body>
